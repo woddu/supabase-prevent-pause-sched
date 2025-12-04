@@ -23,9 +23,13 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_URL1: ${{ secrets.SUPABASE_URL1 }}
+          SUPABASE_KEY1: ${{ secrets.SUPABASE_KEY1 }}
         run: |
           node -e "
           const { createClient } = require('@supabase/supabase-js');
           const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+          const supabase1 = createClient(process.env.SUPABASE_URL1, process.env.SUPABASE_KEY1);
           supabase.from('prevent_pause').select('id').limit(1).then(console.log).catch(console.error);
+          supabase1.from('sample').select('id').limit(1).then(console.log).catch(console.error);
           "
