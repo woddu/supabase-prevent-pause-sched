@@ -30,12 +30,18 @@ jobs:
           node -e "(async () => {
               const { createClient } = await import('@supabase/supabase-js');
               const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
-              const supabase1 = createClient(process.env.SUPABASE_URL1, process.env.SUPABASE_KEY1);
               try {
-                console.log(await supabase.from('prevent_pause').select('id').limit(1));
-                console.log(await supabase1.from('sample').select('id').limit(1));
+                console.log("1: ", await supabase.from('prevent_pause').select('id').limit(1));
               } catch (err) {
-                console.error(err);
+                console.error("1: ", err);
+                process.exit(1);
+              }
+              const supabase1 = createClient(process.env.SUPABASE_URL1, process.env.SUPABASE_KEY1);
+
+              try {               
+                console.log("1: ", await supabase1.from('sample').select('id').limit(1));
+              } catch (err) {
+                console.error("1: ", err);
                 process.exit(1);
               }
             })().catch(e => { console.error(e); process.exit(1); });
